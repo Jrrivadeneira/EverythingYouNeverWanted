@@ -59,5 +59,61 @@ public class BoardState {
 		return false;
 		
 	}
+
+	public BoardState drop(int position) {
+		
+		final BoardState newBoard = this;
+		
+		for (int i = 0; i < this.getHeight()-1; i++) {
+			
+			newBoard.board[position][i] = newBoard.board[position][i+1];
+			
+		}
+		
+		newBoard.board[position][this.getHeight() - 1] = 0;
+		
+		if (newBoard.isOurTurn) {
+			newBoard.canIDrop = false;
+		} else {
+			newBoard.canTheyDrop = false;
+		}
+		
+		newBoard.isOurTurn = !newBoard.isOurTurn;
+		
+		return newBoard;
+		
+	}
+
+	public BoardState place(int position) {
+
+		final BoardState newBoard = this;
+		
+		for (int i = 0; i < this.getHeight(); i++) {
+			if (newBoard.board[position][i] == 0) {
+			
+				newBoard.board[position][i] = (byte) (this.isOurTurn ? 1 : 2);
+				
+			}
+		}
+		
+		if (newBoard.isOurTurn) {
+			newBoard.canIDrop = false;
+		} else {
+			newBoard.canTheyDrop = false;
+		}
+		
+		newBoard.isOurTurn = !newBoard.isOurTurn;
+		
+		return newBoard;
+		
+	}
+	
+	private int getHeight() {
+		return this.size[1];
+	}
+
+	public int getWidth() {
+		return this.size[0];
+	}
 	
 }
