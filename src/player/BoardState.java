@@ -107,6 +107,11 @@ public class BoardState {
 		return newBoard;
 		
 	}
+
+	public void calcHeuristic() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	private int getHeight() {
 		return this.size[1];

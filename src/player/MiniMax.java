@@ -42,10 +42,15 @@ public class MiniMax {
 		
 	}
 
-	public int run() {
+	public MiniMax run() {
 		
-		//generate children for terminal nodes or root
-		if (this.parent == null) {
+		if (this.parent != null) {
+			this.alpha = this.parent.alpha;
+			this.beta = this.parent.beta;
+		}
+		
+		//generate children for nodes without
+		if (this.children.size() == 0) {
 			for (int i = -1*this.board.getWidth(); i < this.board.getWidth(); i++) {
 				
 				//check dropping moves
@@ -69,10 +74,49 @@ public class MiniMax {
 					
 				}
 				
+				//run alpha-beta on children
+				this.run();
+				
 			}
+			
+		//otherwise run minimax with pruning
+		} else {
+			
+			if (this.isMax) {
+				
+				int v = -2147483648;
+				for (final MiniMax child : this.children) {
+					
+					v = Math.max(v, child.run().score);
+					this.alpha = Math.max(this.alpha, v);
+					if (this.beta <= this.alpha) {
+						break;
+					}
+					
+				}
+				
+				this.score = v;
+				
+			} else {
+				
+				int v = 2147483647;
+				for (final MiniMax child : this.children) {
+					
+					v = Math.min(v, child.run().score);
+					this.beta = Math.min(v, this.beta);
+					if (this.beta <= this.alpha) {
+						break;
+					}
+					
+				}
+				
+				this.score = v;
+				
+			}
+			
 		}
 		
-		return 0;
+		return this;
 		
 	}
 	
@@ -80,7 +124,7 @@ public class MiniMax {
 	
 		final MiniMax newNode = this;
 		
-		
+		newNode.board.calcHeuristic();
 		
 		return newNode;
 		
