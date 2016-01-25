@@ -52,31 +52,34 @@ public class PlayerController
 	public void run()
 	{
 		boolean isFirstTurn = true;
+		boolean isPop = false;
 		if(isFirstTurn && isFirst)
 		{
 			heur = new MiniMax(boardState, true);
-			heur.run();
-			int[] moves = null;
-			for (int i = 0; i < boardWidth; i++)
-			{
-				moves[i] = boardState.drop(i).calcHeuristic();
-			}
-			int best = moves[0];
-			int bestIndex = 0;
-			for (int i = 1; i < boardWidth; i++)
-			{
-				if (moves[i] > best)
-				{
-					best = moves[i];
-					bestIndex = i;
-				}
-			}
-			sendMove(true, bestIndex);
+			int move = heur.maxTheMin();
+
+			sendMove(true, move);
 			isFirstTurn = false;
 		}
 		else
 		{
-			
+			heur = new MiniMax(boardState, true);
+			int move = heur.maxTheMin();
+			//A negative move value signifies popping a piece at that position
+			if(move < 0)
+			{
+				//Get the position of the pop
+				move = 0-move;
+				isPop = true;
+			}
+			if(isPop)
+			{
+				sendMove(false, move);
+			}
+			else
+			{
+				sendMove(true, move);
+			}
 		}
 		
 	}
