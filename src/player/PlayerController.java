@@ -6,7 +6,7 @@ import java.util.*;
 public class PlayerController 
 {
 	//Team name
-	String name = "You didn't ask for this";
+	String name = "You didn't ask for this \n";
 	//Time to take a turn
 	int timeLimit;
 	Process p1;
@@ -28,6 +28,11 @@ public class PlayerController
 	{
 		this.name = playerName;
 		this.timeLimit = limit;
+	}
+	
+	public void main()
+	{
+		Start();
 	}
 	
 	public void Start()
@@ -59,6 +64,9 @@ public class PlayerController
 		{
 			heur = new MiniMax(boardState, true);
 			int move = heur.maxTheMin();
+			move = heur.maxTheMin();
+			move = heur.maxTheMin();
+			move = heur.maxTheMin();
 
 			sendMove(true, move);
 			isFirstTurn = false;
@@ -74,6 +82,11 @@ public class PlayerController
 					{
 						theirMove = theirMove + stdin.next();
 					}
+					if(theirMove == "win" || theirMove == "lose" || theirMove == "draw")
+					{
+						isFinished = true;
+						break;
+					}
 					String[] tokens = theirMove.split(" ");
 					boolean didTheyPop = false;
 					if(Integer.parseInt(tokens[0]) == 0)
@@ -83,6 +96,8 @@ public class PlayerController
 					updateBoard(didTheyPop, Integer.parseInt(tokens[1]));
 					heur = new MiniMax(boardState, true);
 					int move = heur.maxTheMin();
+					move = heur.maxTheMin();
+					move = heur.maxTheMin();
 					//A negative move value signifies popping a piece at that position
 					if(move < 0)
 					{
@@ -119,11 +134,11 @@ public class PlayerController
 	{
 		if(isDrop)
 		{
-			System.out.println("1 "+(pos-1));
+			System.out.println("1 "+(pos-1)+"\n");
 		}
 		else
 		{
-			System.out.println("0 "+(pos-1));
+			System.out.println("0 "+(pos-1)+"\n");
 		}
 	}
 	
