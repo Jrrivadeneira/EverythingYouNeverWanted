@@ -14,6 +14,7 @@ public class PlayerController
 	BufferedWriter output;
 	Scanner stdin = new Scanner(new BufferedInputStream(System.in));
 	byte[][] board;
+	BoardState boardState;
 	String input = "";
 	Boolean isFirst = false;
 	int boardHeight;
@@ -42,10 +43,16 @@ public class PlayerController
 	public void init()
 	{
 		readConfig();
+		boardState = new BoardState(boardHeight, boardWidth, numPieces, isFirst);
 	}
 	
 	public void run()
 	{
+		boolean isFirstTurn = true;
+		if(isFirstTurn && isFirst)
+		{
+			
+		}
 		
 	}
 	
