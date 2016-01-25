@@ -1,0 +1,2 @@
+Referee Run Config:
+"java -jar testPlayer1.jar" "java -jar testPlayer2.jar" 6 7 3 10 10

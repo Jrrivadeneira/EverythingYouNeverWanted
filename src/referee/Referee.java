@@ -109,7 +109,7 @@ public class Referee {
 				s = input2.readLine();
 
 			this.autoTimer.cancel();
-
+			System.out.println(s);
 			List<String> ls = Arrays.asList(s.split(" "));
 			if (ls.size() != 2) {
 				System.out
