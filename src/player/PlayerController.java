@@ -20,6 +20,12 @@ public class PlayerController
 	int boardWidth;
 	int numPieces;
 	
+	public PlayerController(String playerName, int limit)
+	{
+		this.name = playerName;
+		this.timeLimit = limit;
+	}
+	
 	public void Start()
 	{
 		sendName();
