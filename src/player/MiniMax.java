@@ -124,7 +124,7 @@ public class MiniMax {
 	
 		final MiniMax newNode = this;
 		
-		newNode.board.calcHeuristic();
+		this.score = newNode.board.calcHeuristic();
 		
 		return newNode;
 		
