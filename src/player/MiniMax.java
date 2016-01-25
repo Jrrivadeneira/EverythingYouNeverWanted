@@ -42,7 +42,7 @@ public class MiniMax {
 		
 	}
 
-	public MiniMax run() {
+	private MiniMax run() {
 		
 		if (this.parent != null) {
 			this.alpha = this.parent.alpha;
@@ -120,6 +120,36 @@ public class MiniMax {
 		
 	}
 	
+	public int maxTheMin() {
+		
+		int bestScore = -100;
+		MiniMax bestMove = null;
+		
+		for (final MiniMax node : this.children) {
+			if (node.score > bestScore) {
+				bestScore = node.score;
+				bestMove = node;
+			}
+		}
+		
+		return this.calcMove(bestMove);
+		
+	}
+	
+	private int calcMove(MiniMax bestMove) {
+
+		for (int i = 0; i < this.board.size[0]; i++) {
+			for (int j = this.board.size[1] - 1; j >= 0; j--) {
+				final int diff = this.board.board[i][j] - bestMove.board.board[i][j];
+				if (diff != 0) {
+					return (int) (Math.signum(diff)*i);
+				}
+			}
+		}
+		
+		return 0;
+	}
+
 	private MiniMax spawnChild(BoardState board) {
 	
 		final MiniMax newNode = this;
