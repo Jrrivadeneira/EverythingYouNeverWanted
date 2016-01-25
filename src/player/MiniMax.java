@@ -42,7 +42,7 @@ public class MiniMax {
 		
 	}
 
-	public MiniMax run() {
+	private MiniMax run() {
 		
 		if (this.parent != null) {
 			this.alpha = this.parent.alpha;
