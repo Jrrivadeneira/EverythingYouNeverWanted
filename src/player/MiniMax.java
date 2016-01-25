@@ -122,6 +122,8 @@ public class MiniMax {
 	
 	public int maxTheMin() {
 		
+		this.run();
+		
 		int bestScore = -100;
 		MiniMax bestMove = null;
 		
