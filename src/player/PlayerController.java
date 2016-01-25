@@ -5,7 +5,9 @@ import java.util.*;
 
 public class PlayerController 
 {
+	//Team name
 	String name = "You didn't ask for this";
+	//Time to take a turn
 	int timeLimit;
 	Process p1;
 	Process p2;
@@ -13,6 +15,10 @@ public class PlayerController
 	Scanner stdin = new Scanner(new BufferedInputStream(System.in));
 	byte[][] board;
 	String input = "";
+	Boolean isFirst = false;
+	int boardHeight;
+	int boardWidth;
+	int numPieces;
 	
 	public void Start()
 	{
@@ -21,6 +27,7 @@ public class PlayerController
 		run();
 	}
 	
+	//Send the referee the team name
 	public void sendName()
 	{
 		System.out.println(name);
@@ -36,12 +43,26 @@ public class PlayerController
 		
 	}
 	
+	//Read the current board state
 	public void readConfig()
 	{
+		//Take the referee's output and store it in a buffer
 		while(stdin.hasNext())
 		{
 			input = input + stdin.next();
 		}
+		
+		//Split the input into each individual element
+		String[] tokens = input.split(" ");
+		boardHeight = Integer.parseInt(tokens[0]);
+		boardWidth = Integer.parseInt(tokens[1]);
+		numPieces = Integer.parseInt(tokens[2]);
+		if(Integer.parseInt(tokens[3])==1)
+		{
+			isFirst = true;
+		}
+		timeLimit = Integer.parseInt(tokens[4]);
+		
 	}
 	
 }
