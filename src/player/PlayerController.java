@@ -2,8 +2,9 @@
 
 package player;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
+import java.util.Scanner;
 
 public class PlayerController {
 	// Team name
@@ -31,7 +32,7 @@ public class PlayerController {
 	}
 
 	public static void main(String[] args) {
-		PlayerController pc = new PlayerController("Dude", 1);
+		final PlayerController pc = new PlayerController("Dude", 1);
 		pc.Start();
 	}
 
@@ -81,7 +82,7 @@ public class PlayerController {
 						isFinished = true;
 						break;
 					}
-					String[] tokens = theirMove.split(" ");
+					final String[] tokens = theirMove.split(" ");
 					boolean didTheyPop = false;
 					if (Integer.parseInt(tokens[0]) == 0) {
 						didTheyPop = true;
@@ -117,11 +118,11 @@ public class PlayerController {
 	}
 
 	public void sendMove(boolean isDrop, int pos) {
-		say("do we make it here?");
+//		say("do we make it here?");
 		if (isDrop) {
-			System.out.println("1 " + (pos - 1));
+			System.out.print("1 " + (pos - 1));
 		} else {
-			System.out.println("0 " + (pos - 1));
+			System.out.print("0 " + (pos - 1));
 		}
 	}
 
@@ -137,7 +138,7 @@ public class PlayerController {
 		input = stdin.nextLine();
 		// say("Recieved: " + input);
 		// Split the input into each individual element
-		String[] tokens = input.split(" ");
+		final String[] tokens = input.split(" ");
 		boardHeight = Integer.parseInt(tokens[0]);
 		boardWidth = Integer.parseInt(tokens[1]);
 		numPieces = Integer.parseInt(tokens[2]);

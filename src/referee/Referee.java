@@ -3,8 +3,15 @@
  */
 package referee;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author lzhu
@@ -110,14 +117,14 @@ public class Referee {
 
 			this.autoTimer.cancel();
 			System.out.println(s);
-			List<String> ls = Arrays.asList(s.split(" "));
+			final List<String> ls = Arrays.asList(s.split(" "));
 			if (ls.size() != 2) {
 				System.out
 						.println("Wrong number of arguments. Each move should have two integers.");
 				this.winner = this.currentPlayer == 1 ? 2 : 1;
 			} else {
-				int column = Integer.parseInt(ls.get(0));
-				int operation = Integer.parseInt(ls.get(1));
+				final int column = Integer.parseInt(ls.get(0));
+				final int operation = Integer.parseInt(ls.get(1));
 				if (this.isValidMove(column, operation)) {
 					makeMove(column, operation);
 					this.board.printBoard();
@@ -160,7 +167,7 @@ public class Referee {
 
 		this.autoTimer.cancel();
 
-		String s = "player1: " + player1_name + " player2: " + player2_name;
+		final String s = "player1: " + player1_name + " player2: " + player2_name;
 		System.out.println(s);
 		this.tellPlayer1(s);
 		this.tellPlayer2(s);
@@ -337,13 +344,14 @@ public class Referee {
 			}
 			this.autoTimer = new Timer();
 			this.autoTimer.schedule(new TimerTask() {
+				@Override
 				public void run() {
 					System.out.println("Time Out!");
 					winner = currentPlayer == 1 ? 2 : 1;
 					try {
 						gameOver();
 
-					} catch (IOException e) {
+					} catch (final IOException e) {
 						e.printStackTrace();
 					}
 
@@ -391,14 +399,14 @@ public class Referee {
 
 	public static void main(String[] arg) throws IOException {
 
-		String command_to_execute_player1 = arg[0];
-		String command_to_execute_player2 = arg[1];
-		int board_height = Integer.parseInt(arg[2]);
-		int board_width = Integer.parseInt(arg[3]);
-		int N = Integer.parseInt(arg[4]);
-		int announceNameTimeLimit = Integer.parseInt(arg[5]);
-		int moveTimeLimit = Integer.parseInt(arg[6]);
-		Referee ref = new Referee(command_to_execute_player1,
+		final String command_to_execute_player1 = arg[0];
+		final String command_to_execute_player2 = arg[1];
+		final int board_height = Integer.parseInt(arg[2]);
+		final int board_width = Integer.parseInt(arg[3]);
+		final int N = Integer.parseInt(arg[4]);
+		final int announceNameTimeLimit = Integer.parseInt(arg[5]);
+		final int moveTimeLimit = Integer.parseInt(arg[6]);
+		final Referee ref = new Referee(command_to_execute_player1,
 				command_to_execute_player2, board_height, board_width, N,
 				announceNameTimeLimit, moveTimeLimit);
 

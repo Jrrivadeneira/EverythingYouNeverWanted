@@ -76,10 +76,10 @@ public class MiniMax {
 
 				}
 
-				// run alpha-beta on children
-				this.run();
-
 			}
+
+			// run alpha-beta on children
+			//this.run();
 
 			// otherwise run minimax with pruning
 		} else {
@@ -89,7 +89,7 @@ public class MiniMax {
 				int v = -2147483648;
 				for (final MiniMax child : this.children) {
 
-					v = Math.max(v, child.run().score);
+					v = Math.max(v, child.score);
 					this.alpha = Math.max(this.alpha, v);
 					if (this.beta <= this.alpha) {
 						break;
@@ -104,7 +104,7 @@ public class MiniMax {
 				int v = 2147483647;
 				for (final MiniMax child : this.children) {
 
-					v = Math.min(v, child.run().score);
+					v = Math.min(v, child.score);
 					this.beta = Math.min(v, this.beta);
 					if (this.beta <= this.alpha) {
 						break;

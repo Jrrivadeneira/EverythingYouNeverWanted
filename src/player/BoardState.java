@@ -36,6 +36,15 @@ public class BoardState {
 
 	}
 
+	public BoardState(BoardState boardState) {
+		this.board = boardState.board;
+		this.isOurTurn = boardState.isOurTurn;
+		this.canIDrop = boardState.canIDrop;
+		this.canTheyDrop = boardState.canTheyDrop;
+		this.size = boardState.size;
+		this.N = boardState.N;
+	}
+
 	boolean isValidMove(int position, boolean drop) {
 
 		// if the move is a drop
@@ -56,7 +65,7 @@ public class BoardState {
 		} else {
 
 			// the move is valid if the top row is empty
-			if (this.board[position][this.size[1] - 1] != 0) {
+			if (this.board[position][this.size[1] - 1] == 0) {
 				return true;
 			}
 
@@ -68,7 +77,7 @@ public class BoardState {
 
 	public BoardState drop(int position) {
 
-		final BoardState newBoard = this;
+		final BoardState newBoard = new BoardState(this);
 
 		for (int i = 0; i < this.getHeight() - 1; i++) {
 
@@ -92,7 +101,7 @@ public class BoardState {
 
 	public BoardState place(int position) {
 
-		final BoardState newBoard = this;
+		final BoardState newBoard = new BoardState(this);
 
 		for (int i = 0; i < this.getHeight(); i++) {
 			if (newBoard.board[position][i] == 0) {
