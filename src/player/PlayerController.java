@@ -55,6 +55,7 @@ public class PlayerController
 		if(isFirstTurn && isFirst)
 		{
 			heur = new MiniMax(boardState, true);
+			heur.run();
 			int[] moves = null;
 			for (int i = 0; i < boardWidth; i++)
 			{
@@ -71,6 +72,11 @@ public class PlayerController
 				}
 			}
 			sendMove(true, bestIndex);
+			isFirstTurn = false;
+		}
+		else
+		{
+			
 		}
 		
 	}
