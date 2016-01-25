@@ -53,6 +53,8 @@ public class PlayerController
 	{
 		boolean isFirstTurn = true;
 		boolean isPop = false;
+		boolean isFinished = false;
+		
 		if(isFirstTurn && isFirst)
 		{
 			heur = new MiniMax(boardState, true);
@@ -63,36 +65,65 @@ public class PlayerController
 		}
 		else
 		{
-			heur = new MiniMax(boardState, true);
-			int move = heur.maxTheMin();
-			//A negative move value signifies popping a piece at that position
-			if(move < 0)
+			while(!isFinished)
 			{
-				//Get the position of the pop
-				move = 0-move;
-				isPop = true;
+				if(stdin.hasNextLine())
+				{
+					String theirMove = "";
+					while(stdin.hasNext())
+					{
+						theirMove = theirMove + stdin.next();
+					}
+					String[] tokens = theirMove.split(" ");
+					boolean didTheyPop = false;
+					if(Integer.parseInt(tokens[0]) == 0)
+					{
+						didTheyPop = true;
+					}
+					updateBoard(didTheyPop, Integer.parseInt(tokens[1]));
+					heur = new MiniMax(boardState, true);
+					int move = heur.maxTheMin();
+					//A negative move value signifies popping a piece at that position
+					if(move < 0)
+					{
+						//Get the position of the pop
+						move = 0-move;
+						isPop = true;
+					}	
+					if(isPop)
+					{
+						sendMove(false, move);
+					}
+					else
+					{
+						sendMove(true, move);
+					}
+				}
 			}
-			if(isPop)
-			{
-				sendMove(false, move);
-			}
-			else
-			{
-				sendMove(true, move);
-			}
+		}	
+	}
+	
+	public void updateBoard(boolean isDrop, int pos)
+	{
+		if(isDrop)
+		{
+			boardState = boardState.place(pos);
 		}
-		
+		else
+		{
+			boardState = boardState.drop(pos);
+		}
 	}
 	
 	public void sendMove(boolean isDrop, int pos)
 	{
 		if(isDrop)
 		{
-			System.out.println("1 "+pos);
+			System.out.println("1 "+(pos-1));
 		}
 		else
 		{
-			System.out.println("0 "+pos);
+			System.out.println("0 "+(pos-1));
 		}
 	}
 	
