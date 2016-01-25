@@ -1,3 +1,5 @@
+//Authors: Chris Knapp, Connor Flanigan, Jack Rivadeneira
+
 package player;
 
 import java.util.LinkedList;
