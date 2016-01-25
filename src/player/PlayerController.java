@@ -21,6 +21,9 @@ public class PlayerController
 	int boardWidth;
 	int numPieces;
 	
+	//Heuristics controller that evaluates moves
+	MiniMax heur;
+	
 	public PlayerController(String playerName, int limit)
 	{
 		this.name = playerName;
@@ -51,9 +54,37 @@ public class PlayerController
 		boolean isFirstTurn = true;
 		if(isFirstTurn && isFirst)
 		{
-			
+			heur = new MiniMax(boardState, true);
+			int[] moves = null;
+			for (int i = 0; i < boardWidth; i++)
+			{
+				moves[i] = boardState.drop(i).calcHeuristic();
+			}
+			int best = moves[0];
+			int bestIndex = 0;
+			for (int i = 1; i < boardWidth; i++)
+			{
+				if (moves[i] > best)
+				{
+					best = moves[i];
+					bestIndex = i;
+				}
+			}
+			sendMove(true, bestIndex);
 		}
 		
+	}
+	
+	public void sendMove(boolean isDrop, int pos)
+	{
+		if(isDrop)
+		{
+			System.out.println("1 "+pos);
+		}
+		else
+		{
+			System.out.println("0 "+pos);
+		}
 	}
 	
 	//Read the current board state
