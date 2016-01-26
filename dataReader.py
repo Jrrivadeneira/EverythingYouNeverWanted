@@ -1,10 +1,8 @@
 """ Jack Rivadeneira 
 Connor Flannigan 
 Chris Knapp"""
-print "PROGRAM START!"
-
-def readData():
-	f = open("testFile.csv","r")
+def readData(filePath):
+	f = open(filePath,"r")
 	fileData = f.read().split("\n")
 	ret = []
 	for eachLine in fileData:
