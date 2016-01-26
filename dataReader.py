@@ -10,6 +10,4 @@ def readData():
 	for eachLine in fileData:
 		ret+=[eachLine.split(",")]
 	return ret
-fileData = readData()
-for eachItem in fileData:
-	print eachItem
+	
