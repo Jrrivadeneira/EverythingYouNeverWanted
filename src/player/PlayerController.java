@@ -11,11 +11,7 @@ public class PlayerController
 	String name = "You didn't ask for this";
 	//Time to take a turn
 	int timeLimit;
-	Process p1;
-	Process p2;
-	BufferedWriter output;
 	Scanner stdin = new Scanner(new BufferedInputStream(System.in));
-	byte[][] board;
 	BoardState boardState;
 	String input = "";
 	Boolean isFirst = false;
