@@ -10,7 +10,7 @@ def readData(filePath):
 	ret = []
 	for eachLine in fileData:
 		if(eachLine!=''):
-			ret+=[eachLine.split(",")]
+			ret+=[eachLine.split(" ")]
 	ret = map(myFloat,ret)
 
 	return ret

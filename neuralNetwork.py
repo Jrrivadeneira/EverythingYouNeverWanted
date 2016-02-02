@@ -63,11 +63,8 @@ class NeuralNetwork(object):
 		bestNet = self
 		bestError = (testAns - self.predict(testMat)).mean()
 		
-		print bestError
-		
 		error = (answersMatrix - self.predict(inputMatrix))
 		acceptableError = 1e-8
-		print error.mean()
 		
 		while(abs(error.mean())>acceptableError):
 			derivativeOfOutputWithRespectToWeightTwo = dot(self.activatedValuesOfLayerTwo.T,self.deltaThree(error))
@@ -82,7 +79,7 @@ class NeuralNetwork(object):
 				
 			error = (answersMatrix - self.predict(inputMatrix).round())
 		
+		print "Error of  witheld data = " 
 		print bestError
-		print error.mean()
 		
 		return bestNet
