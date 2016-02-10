@@ -1,0 +1,5 @@
+	In order to determine that our heuristic function was valid, we calculated it manually to play several games against human players,
+ourselves and anyone nearby.  By trying to minimize the number of moves that our algorithm (Max) needed to make and maximizing the 
+number of moves the opponent needed to make (Min), we were able to determine that, while not necessarily optimal, it was capable of 
+competing against other, presumably logical agents.  Though very simple, it works well.  Max was able to win every game if it went first, 
+and did not lose any games it went second in.
