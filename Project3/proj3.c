@@ -16,7 +16,14 @@ int main(int argc, char *argv[])
   }
   else
   {
-    printf("Not enough arguments supplied\n")
+    printf("Not enough arguments supplied\n");
   }
-  FILE *in = fopen()
+  FILE *in = fopen(inPath, "r");
+  FILE *out = fopen(outPath, "w");
+  //First index is the row, the second index is the collumn
+  char inArray[][];
+  //There are 1000 games, each with 5 attributes, leading to 5000 entries + the labels
+  //This buffer should be large enough to accomodate the data set
+  inArray = malloc(sizeof(char * 10000000));
+
 }
