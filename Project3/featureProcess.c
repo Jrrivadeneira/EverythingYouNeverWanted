@@ -7,9 +7,9 @@ Jack Rivadeneira
 //helper functions are defined first here
 
 //both these functions replace a line in the array storing all games in order to update it
-int** lineReplace(int allGames[43][1000], int thisGame[43], int index) {
+signed char** lineReplace(signed char allGames[43][1000], signed char thisGame[43], signed char index) {
 
-	for(int i = 0; i < 43; i++) {
+	for(signed char i = 0; i < 43; i++) {
 		allGames[i][index] = thisGame[i];
 	}
 
@@ -17,9 +17,9 @@ int** lineReplace(int allGames[43][1000], int thisGame[43], int index) {
 	
 }
 
-int** lineReplace(int allGames[48][1000], int thisGame[48], int index) {
+signed char** lineReplace(signed char allGames[48][1000], signed char thisGame[48], signed char index) {
 
-	for(int i = 0; i < 48; i++) {
+	for(signed char i = 0; i < 48; i++) {
 		allGames[i][index] = thisGame[i];
 	}
 
@@ -28,14 +28,14 @@ int** lineReplace(int allGames[48][1000], int thisGame[48], int index) {
 }
 
 //extract and expand one game from the list of raw games
-int* extractGame(int rawGames[43][1000], int index) {
+signed char* extractGame(signed char rawGames[43][1000], signed char index) {
 	
-	int newGame[48];
+	signed char newGame[48];
 	
-	for(int i = 0; i < 42; i++){
+	for(signed char i = 0; i < 42; i++){
 		newGame[i] = rawGames[i][index];
 	}
-	for(int i = 42; i < 47; i++){
+	for(signed char i = 42; i < 47; i++){
 		newGame[i] = 0;
 	}
 	newGame[47] = rawGames[42][index];
@@ -45,14 +45,14 @@ int* extractGame(int rawGames[43][1000], int index) {
 }
 
 //simplify getting a cell from a game
-int get(int game[48], int x, int y) {
+signed char get(signed char game[48], signed char x, signed char y) {
 	return game[(y) + 6*(x)];
 }
 
 //return 1 if there is an empty space adjacent to the one presented
-int checkAround(int game[48]. x, y) {
-	for(int i = x-1; i < x+1; i++) {
-		for(int j = y-1; j < y+1, j++) {
+signed char checkAround(signed char game[48]. x, y) {
+	for(signed char i = x-1; i < x+1; i++) {
+		for(signed char j = y-1; j < y+1, j++) {
 			if (i >= 0 && j >=0 && i < 7 && j < 6) {
 				if (get(game,i,j) == 0) {
 					return (get(game,x,y) == 1)?1:-1;
@@ -63,22 +63,103 @@ int checkAround(int game[48]. x, y) {
 	return 0;
 }
 
+//a minimum function
+signed char minimum(signed char a, signed char b, signed char c, signed char d, signed char e) {
+	a = a < b ? a : b;
+	c = c < d ? c : d;
+	a = a < c ? a : d;
+	a = a < e ? a : e;
+	
+	return e;
+}
+
+//cascade and the ch functions check the directions around a cell to see if they can be expanded for the turnsToVictory feature
+signed char cascade(signed char game[48], signed char x, signed char y) {
+	for (signed i = y; y >= 0; y--){
+		if (get(game, x, i) != 0){
+			return y - i;
+		}
+	}
+}
+
+signed char chUp(signed char game[48]signed char x, signed char y, signed char player) {
+	if (y > 1){
+		return 100;
+	}
+	signed char turns = 0;
+	for(signed char i = 1; i < 4; i++){
+		if(get(game,x,y+i)==0){
+			return 4 - i;
+		}else if (get(game,x,y+i) != player && get(game,x,y+i)!= 0) {
+			return 101;
+		}
+	}
+	return 0;
+}
+
+signed char chRi(signed char game[48]signed char x, signed char y, signed char player) {
+	if (x > 2){
+		return 100;
+	}
+	signed char turns = 0;
+	for (signed char i = 1; i < 4; i++) {
+		if (get(game,x+i,y) != player){
+			if(get(game,x+i,y) == 0) {
+				turns += cascade(game,x+i,y);
+			} else {
+				return 100;
+			}
+		}
+	}
+}
+
+signed char chUpRi(signed char game[48]signed char x, signed char y, signed char player) {
+	if (x > 2 || y > 1) {
+		return 100;
+	}
+	signed char turns = 0;
+	for (signed char i = 1; i < 4; i++) {
+		if (get(game,x+i,y+i) != player){
+			if(get(game,x+i,y+i) == 0) {
+				turns += cascade(game,x+i,y+i);
+			} else {
+				return 100;
+			}
+		}
+	}
+}
+
+signed char chUpLe(signed char game[48]signed char x, signed char y, signed char player) {
+	if (x < 3 || y > 1) {
+		return 100;
+	}
+	signed char turns = 0;
+	for (signed char i = 1; i < 4; i++) {
+		if (get(game,x-i,y+i) != player){
+			if(get(game,x-i,y+i) == 0) {
+				turns += cascade(game,x-i,y+i);
+			} else {
+				return 100;
+			}
+		}
+	}
+}
 
 //the following five functions define the features to be processed
 
 //this is the first feature, which player has a tile in the bottom left corner of the board
-int* corner(int game[48]) {
+signed char* corner(signed char game[48]) {
 	return game[42] = game[0];
 }
 
 //this feature returns the player with the most tiles in the center three rows
-int* centerControl(int game[48]) {
+signed char* centerControl(signed char game[48]) {
 	
-	int controller = 0;
+	signed char controller = 0;
 	
 	//check each cell in the center three rows
-	for(int i = 3; i < 5; i++) {
-		for(int j = 0; j < 7; j++) {
+	for(signed char i = 3; i < 5; i++) {
+		for(signed char j = 0; j < 7; j++) {
 			//add for player1,subtract for player2
 			if(get(game, i, j) == 1) {
 				controller++;
@@ -103,29 +184,32 @@ int* centerControl(int game[48]) {
 }
 
 //this feature returns the player who requires the fewest odd number of moves until victory
-int* turnsToVictory(int game[48]) {
+signed char* turnsToVictory(signed char game[48]) {
 	
-	p1Vict = 100;
-	p2Vict = 100;
+	int p1Vict = 100;
+	int p2Vict = 100;
 	
-	for(int i = 0; i < 4; i++) {
-		for(int j = 0; j < 3; j++) {
+	for(signed char i = 0; i < 7; i++) {
+		for(signed char j = 0; j < 6; j++) {
 			if(get(game, i, j) != 0) {
-				
+				p1Vict = minimum(p1Vict, chUp(game,i,j,1),chRi(game,i,j,1),chUpLe(game,i,j,1),chUpRi(game,i,j,1));
+				p2Vict = minimum(p2Vict, chUp(game,i,j,2),chRi(game,i,j,2),chUpLe(game,i,j,2),chUpRi(game,i,j,2));
 			}
 		}
 	}
+	
+	game[44] = p1Vict-p2Vict
 	
 	return game;
 
 }
 
 //this feature returns which player  has the most exposed cells
-int* exposition(int game[48]) {
-	int control = 0;
+signed char* exposition(signed char game[48]) {
+	signed char control = 0;
 	
-	for(int i = 0; i < 4; i++) {
-		for(int j = 0; j < 3; j++) {
+	for(signed char i = 0; i < 4; i++) {
+		for(signed char j = 0; j < 3; j++) {
 			if(get(game, i, j) != 0) {
 				control += checkAround(game, i, j);
 			}
@@ -137,23 +221,23 @@ int* exposition(int game[48]) {
 }
 
 //this feature determines which player has control of the sides of the board
-int* siderealControl(int game[48]) {
+signed char* siderealControl(signed char game[48]) {
 	return game;
 }
 
 
 
 //this function takes a 2d array containing boardstates for Connect-4 and returns an array of boardstates & features of those boardstates as a 2d array
-int** processGames(int rawGames[43][1000]) {
+signed char** processGames(signed char rawGames[43][1000]) {
 	
 	//define new variables
-	int cookedGames[48][1000];
+	signed char cookedGames[48][1000];
 	
 	//for each game, process each features
 	for(int i = 0; i < 1000; i++) {
 		
 		//create a new game from the list of games
-		int thisGame[48] = extractGame(rawGames, i);
+		signed char thisGame[48] = extractGame(rawGames, i);
 		
 		//process this game
 		thisGame = corner(thisGame);
@@ -166,7 +250,7 @@ int** processGames(int rawGames[43][1000]) {
 		
 		thisGame = siderealControl(thisGame);
 		
-		//insert this game into the processed games
+		//insert this game signed charo the processed games
 		cookedGames = lineReplace(cookedGames, thisGame, i);
 		
 	}
