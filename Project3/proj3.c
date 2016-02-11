@@ -1,3 +1,9 @@
+/*Authors:
+Chris Knapp
+Connor Flanigan
+Jack Rivadeneira
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,7 +27,8 @@ int main(int argc, char *argv[])
   }
 
   FILE *in = fopen(inPath, "r");
-  FILE *out = fopen(outPath, "w");
+  //Create the file if it does not exist, otherwise truncate and clear it
+  FILE *out = fopen(outPath, "w+");
   //First index is the row, the second index is the collumn
   char inArray[][];
   //There are 1000 games, each game will have 43 entries, one for each spot on the board
@@ -47,6 +54,19 @@ int main(int argc, char *argv[])
       collumn++;
     }
     row++;
+  }
+
+  /* CONNOR DOES STUFF HERE */
+
+  char outArray[][];
+  row = 0;
+  collumn = 0;
+  for(row; row < strlen(outArray[row]); row++)
+  {
+    for(collumn; collumn < strlen(outArray[collumn]); collumn++)
+    {
+      fprintf(out, "%c,", outArray[row][collumn]);
+    }
   }
 
 }
