@@ -261,6 +261,13 @@ signed char** processGames(signed char rawGames[43][1000]) {
 	cookedGames[43][0] = "centerControl";
 	cookedGames[42][0] = "corner";
 
+	for(int i = 0; i < 42; i++)
+	{
+		char *title;
+		sprintf(title, "f%d", i);
+		cookedGames[i][0] = title;
+	}
+
 	//for each game, process each features
 	for(int i = 1; i < 1001; i++) {
 
