@@ -7,6 +7,7 @@ Jack Rivadeneira
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "featureProcess.h"
 
 
 int main(int argc, char *argv[])
@@ -62,6 +63,7 @@ int main(int argc, char *argv[])
   /* CONNOR DOES STUFF HERE */
 
   char outArray[][];
+  outArray = processGames(inArray);
   row = 0;
   collumn = 0;
   for(row; row < 1000; row++)
