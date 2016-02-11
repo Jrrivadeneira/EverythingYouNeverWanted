@@ -24,12 +24,13 @@ int main(int argc, char *argv[])
   else
   {
     printf("Not enough arguments supplied\n");
+    return -1;
   }
 
   FILE *in = fopen(inPath, "r");
   //Create the file if it does not exist, otherwise truncate and clear it
   FILE *out = fopen(outPath, "w+");
-  //First index is the row, the second index is the collumn
+  //First index is the collumn, the second index is the row
   char inArray[][];
   //There are 1000 games, each game will have 43 entries, one for each spot on the board
   //There is also one entry for which player won, as well as a header line
@@ -47,12 +48,12 @@ int main(int argc, char *argv[])
   while((read = getline(&line, &len, in)) != -1)
   {
     token = strtok(line, ",");
-    inArray[row][collumn] = token;
+    inArray[collumn][row] = token;
     collumn++;
     while(token != NULL)
     {
       token = strtok(NULL, ",");
-      inArray[row][collumn] = token;
+      inArray[collumn][row] = token;
       collumn++;
     }
     row++;
@@ -63,12 +64,12 @@ int main(int argc, char *argv[])
   char outArray[][];
   row = 0;
   collumn = 0;
-  for(row; row < strlen(outArray[row]); row++)
+  for(row; row < 1000; row++)
   {
-    for(collumn; collumn < strlen(outArray[collumn]); collumn++)
+    for(collumn; collumn < 48; collumn++)
     {
-      fprintf(out, "%c,", outArray[row][collumn]);
+      fprintf(out, "%c,", outArray[collumn][row]);
     }
   }
-
+  return 0;
 }
