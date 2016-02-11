@@ -14,7 +14,7 @@ signed char** lineReplace(signed char allGames[43][1000], signed char thisGame[4
 	}
 
 	return allGames;
-	
+
 }
 
 signed char** lineReplace(signed char allGames[48][1000], signed char thisGame[48], signed char index) {
@@ -24,14 +24,14 @@ signed char** lineReplace(signed char allGames[48][1000], signed char thisGame[4
 	}
 
 	return allGames;
-	
+
 }
 
 //extract and expand one game from the list of raw games
 signed char* extractGame(signed char rawGames[43][1000], signed char index) {
-	
+
 	signed char newGame[48];
-	
+
 	for(signed char i = 0; i < 42; i++){
 		newGame[i] = rawGames[i][index];
 	}
@@ -39,7 +39,7 @@ signed char* extractGame(signed char rawGames[43][1000], signed char index) {
 		newGame[i] = 0;
 	}
 	newGame[47] = rawGames[42][index];
-	
+
 	return newGame;
 
 }
@@ -69,7 +69,7 @@ signed char minimum(signed char a, signed char b, signed char c, signed char d, 
 	c = c < d ? c : d;
 	a = a < c ? a : d;
 	a = a < e ? a : e;
-	
+
 	return e;
 }
 
@@ -154,9 +154,9 @@ signed char* corner(signed char game[48]) {
 
 //this feature returns the player with the most tiles in the center three rows
 signed char* centerControl(signed char game[48]) {
-	
+
 	signed char controller = 0;
-	
+
 	//check each cell in the center three rows
 	for(signed char i = 3; i < 5; i++) {
 		for(signed char j = 0; j < 7; j++) {
@@ -169,7 +169,7 @@ signed char* centerControl(signed char game[48]) {
 			}
 		}
 	}
-	
+
 	//return which player has more control of the center, or 0 if equal control is exerted
 	if (controller > 0){
 		game[43] = 1;
@@ -178,17 +178,17 @@ signed char* centerControl(signed char game[48]) {
 	}else{
 		game[43] = 0;
 	}
-	
+
 	return game
-	
+
 }
 
 //this feature returns the player who requires the fewest odd number of moves until victory
 signed char* turnsToVictory(signed char game[48]) {
-	
+
 	int p1Vict = 100;
 	int p2Vict = 100;
-	
+
 	for(signed char i = 0; i < 7; i++) {
 		for(signed char j = 0; j < 6; j++) {
 			if(get(game, i, j) != 0) {
@@ -197,9 +197,9 @@ signed char* turnsToVictory(signed char game[48]) {
 			}
 		}
 	}
-	
+
 	game[44] = p1Vict-p2Vict
-	
+
 	return game;
 
 }
@@ -207,7 +207,7 @@ signed char* turnsToVictory(signed char game[48]) {
 //this feature returns which player  has the most exposed cells
 signed char* exposition(signed char game[48]) {
 	signed char control = 0;
-	
+
 	for(signed char i = 0; i < 4; i++) {
 		for(signed char j = 0; j < 3; j++) {
 			if(get(game, i, j) != 0) {
@@ -215,7 +215,7 @@ signed char* exposition(signed char game[48]) {
 			}
 		}
 	}
-	
+
 	game[45] = control;
 	return game;
 }
@@ -224,7 +224,7 @@ signed char* exposition(signed char game[48]) {
 signed char* siderealControl(signed char game[48]) {
 	signed char p1Control = 0;
 	signed char p2Control = 0;
-	
+
 	for(int i = 0; i < 7; i++) {
 		for(int j = 0; j < 6; j++) {
 			if(get(game,i,j) == 1) {
@@ -239,9 +239,9 @@ signed char* siderealControl(signed char game[48]) {
 			}
 		}
 	}
-	
+
 	game[46] = p1Control-p2Control;
-	
+
 	return game;
 }
 
@@ -249,33 +249,41 @@ signed char* siderealControl(signed char game[48]) {
 
 //this function takes a 2d array containing boardstates for Connect-4 and returns an array of boardstates & features of those boardstates as a 2d array
 signed char** processGames(signed char rawGames[43][1000]) {
-	
+
 	//define new variables
-	signed char cookedGames[48][1000];
-	
+	signed char cookedGames[48][1001];
+
+	//label the collumns
+	cookedGames[47][0] = "winner";
+	cookedGames[46][0] = "sideControl";
+	cookedGames[45][0] = "control";
+	cookedGames[44][0] = "closeToWin";
+	cookedGames[43][0] = "centerControl";
+	cookedGames[42][0] = "corner";
+
 	//for each game, process each features
-	for(int i = 0; i < 1000; i++) {
-		
+	for(int i = 1; i < 1001; i++) {
+
 		//create a new game from the list of games
 		signed char thisGame[48] = extractGame(rawGames, i);
-		
+
 		//process this game
 		thisGame = corner(thisGame);
-		
+
 		thisGame = centerControl(thisGame);
-		
+
 		thisGame = turnsToVictory(thisGame);
-		
+
 		thisGame = exposition(thisGame);
-		
+
 		thisGame = siderealControl(thisGame);
-		
+
 		//insert this game signed charo the processed games
 		cookedGames = lineReplace(cookedGames, thisGame, i);
-		
+
 	}
-	
+
 	//return the processed games
 	return cookedGames;
-	
+
 }
