@@ -222,6 +222,26 @@ signed char* exposition(signed char game[48]) {
 
 //this feature determines which player has control of the sides of the board
 signed char* siderealControl(signed char game[48]) {
+	signed char p1Control = 0;
+	signed char p2Control = 0;
+	
+	for(int i = 0; i < 7; i++) {
+		for(int j = 0; j < 6; j++) {
+			if(get(game,i,j) == 1) {
+				signed char score = 3 - i;
+				score = score > 0 ? score : -1*score;
+				p1Control += score;
+			}
+			if(get(game,i,j) == 2) {
+				signed char score = 3 - i;
+				score = score > 0 ? score : -1*score;
+				p2Control += score;
+			}
+		}
+	}
+	
+	game[46] = p1Control-p2Control;
+	
 	return game;
 }
 
