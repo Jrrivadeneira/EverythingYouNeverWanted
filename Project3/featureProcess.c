@@ -44,10 +44,24 @@ int* extractGame(int rawGames[43][1000], int index) {
 
 }
 
+//simplify getting a cell from a game
 int get(int game[48], int x, int y) {
-	return game[(y-1) + 6*(x-1)];
+	return game[(y) + 6*(x)];
 }
 
+//return 1 if there is an empty space adjacent to the one presented
+int checkAround(int game[48]. x, y) {
+	for(int i = x-1; i < x+1; i++) {
+		for(int j = y-1; j < y+1, j++) {
+			if (i >= 0 && j >=0 && i < 7 && j < 6) {
+				if (get(game,i,j) == 0) {
+					return (get(game,x,y) == 1)?1:-1;
+				}
+			}
+		}
+	}
+	return 0;
+}
 
 
 //the following five functions define the features to be processed
@@ -90,17 +104,41 @@ int* centerControl(int game[48]) {
 
 //this feature returns the player who requires the fewest odd number of moves until victory
 int* turnsToVictory(int game[48]) {
+	
+	p1Vict = 100;
+	p2Vict = 100;
+	
+	for(int i = 0; i < 4; i++) {
+		for(int j = 0; j < 3; j++) {
+			if(get(game, i, j) != 0) {
+				
+			}
+		}
+	}
+	
 	return game;
+
 }
 
 //this feature returns which player  has the most exposed cells
 int* exposition(int game[48]) {
+	int control = 0;
+	
+	for(int i = 0; i < 4; i++) {
+		for(int j = 0; j < 3; j++) {
+			if(get(game, i, j) != 0) {
+				control += checkAround(game, i, j);
+			}
+		}
+	}
+	
+	game[45] = control;
 	return game;
 }
 
 //this feature determines which player has control of the sides of the board
 int* siderealControl(int game[48]) {
-	
+	return game;
 }
 
 
