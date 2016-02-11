@@ -42,6 +42,8 @@ int main(int argc, char *argv[])
 
   int row = 0;
   int collumn = 0;
+  //Throw away the first row, which should only be labels
+  read = getline(&line, &len, in);
   while((read = getline(&line, &len, in)) != -1)
   {
     token = strtok(line, ",");
