@@ -32,10 +32,10 @@ int main(int argc, char *argv[])
   //Create the file if it does not exist, otherwise truncate and clear it
   FILE *out = fopen(outPath, "w+");
   //First index is the collumn, the second index is the row
-  char inArray[][];
+  char inArray[43][1001];
   //There are 1000 games, each game will have 43 entries, one for each spot on the board
   //There is also one entry for which player won, as well as a header line
-  inArray = malloc(sizeof(char * (43*1001)));
+  inArray = malloc(sizeof(char) * (43*1001));
 
   ssize_t read;
   size_t len = 0;
